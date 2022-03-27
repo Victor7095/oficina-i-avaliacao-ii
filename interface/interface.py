@@ -81,8 +81,8 @@ def main():
         for i in range(0, 3):
             # Passar lista de filmes recomendados ao usuário
             # para captura dos dados referentes ao filme (nome, ano, gênero, etc.)
-            form_movie()
             st.markdown('---')
+            form_movie()
 
 
 if __name__ == '__main__':
