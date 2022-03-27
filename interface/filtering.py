@@ -20,14 +20,13 @@ model_knn.fit(mat_movie_features)
 
 user_id = 232
 
-def df_to_dict(recommendations):
+def df_formatted(recommendations):
   df_movies = pd.read_csv(MOVIES_ONLY_PATH)
   df_movie_ratings = df_movies[df_movies['title'].isin(recommendations.index)]
   df_movie_ratings = df_movie_ratings.set_index("title")
   df_movie_ratings.insert(2, 'rating', recommendations)
   df_movie_ratings = df_movie_ratings.sort_values(by=['rating'], ascending=False)
-  df_movie_ratings = df_movie_ratings.set_index("currentId").T.to_dict('list')
-  return [{key: df_movie_ratings[key]} for key in df_movie_ratings]
+  return df_movie_ratings.reset_index()
 
 def watched_movies(user_id):
     user_ratings = movie_ratings_pivot.loc[user_id]
@@ -35,7 +34,7 @@ def watched_movies(user_id):
     r = movie_ratings_pivot.loc[user_id][(user_ratings > 0)]
     r = r.sort_values(ascending=False)
 
-    return df_to_dict(r)
+    return df_formatted(r)
 
 def recommend(user_id):
     distances, indices = model_knn.kneighbors(
@@ -50,7 +49,7 @@ def recommend(user_id):
     r = movie_ratings_pivot.loc[closest_user_id][(closest_user_ratings > 0) & (user_ratings == 0)]
     r = r.sort_values(ascending=False)
 
-    return df_to_dict(r)
+    return df_formatted(r)
 
 user_watched_movies = watched_movies(user_id)
 recommendations = recommend(user_id)
