@@ -8,22 +8,19 @@ def form_movie():
     # Nome filme
     with col_Centered:
         # Nome filme
-        st.write("name")
+        st.write(f"Filme: ")
 
         # Avaliação
-        st.write("0-5")
+        st.write(f"Rating: ")
 
         # Gênero
-        st.write("Genre")
+        st.write(f"Gênero: ")
 
         # Ano
-        st.write("year")
+        st.write(f"Ano: ")
 
         # Sinopese
-        st.write("description")
-
-    st.markdown(
-        "**----------------------------------------------------------------------------------------------------------------------------------------**")
+        st.write(f"Sinopese")
 
 
 def main():
@@ -69,11 +66,12 @@ def main():
         for i in range(0, 3):
             # Passar lista de filmes assistidos pelo usuário
             # para captura dos dados referentes ao filme (nome, ano, gênero, etc.)
+            st.markdown('---')
             form_movie()
 
         # Terceira área de interação
         html_recomendados = """
-                <div style=padding:15px">
+                <div style=padding:10px; margin-top:30px;">
                 <h3 style="color:white;text-align:center;">👍 Recomendados</h3>
                 </div>
             """
@@ -84,6 +82,7 @@ def main():
             # Passar lista de filmes recomendados ao usuário
             # para captura dos dados referentes ao filme (nome, ano, gênero, etc.)
             form_movie()
+            st.markdown('---')
 
 
 if __name__ == '__main__':
