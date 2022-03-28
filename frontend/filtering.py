@@ -3,7 +3,7 @@ from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
 
-ROOT = "dataset processado"
+ROOT = "../dataset processado"
 RATINGS_ONLY_PATH = ROOT + '/ratings-only.csv'
 MOVIES_ONLY_PATH = ROOT + '/movies-only.csv'
 
@@ -54,6 +54,8 @@ def recommend(user_id):
 
     return df_formatted(r)
 
+
+all_users = list(df_ratings['userId'].unique())
 
 user_id = 232
 

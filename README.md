@@ -4,5 +4,5 @@
 
 Para rodar a aplicação:
 
-- cd .\oficina-i-avaliacao-ii\interface;
+- cd .\oficina-i-avaliacao-ii\frontend;
 - `streamlit run interface.py`
