@@ -7,7 +7,7 @@ sys.path.append("lib")
 
 def form_movie(movies):
 
-    col1, col_Centered, col3 = st.columns([8, 5, 6])
+    col1, col_Centered, col3 = st.columns([7, 5, 6])
 
     # Nome filme
     with col_Centered:
@@ -61,7 +61,7 @@ def main():
             """
         st.markdown(html_assistidos, unsafe_allow_html=True)
 
-        user_watched_movies = df_watched_movies[:2]
+        user_watched_movies = df_watched_movies[:5]
 
         # Percorre a lista de filmes assistidos pelo o usuário
         for i in range(len(user_watched_movies)):
@@ -78,7 +78,7 @@ def main():
             """
         st.markdown(html_recomendados, unsafe_allow_html=True)
 
-        five_recommended = df_recommended[:2]
+        five_recommended = df_recommended[:5]
 
         # Percorre a lista de filmes recomendados ao usuário
         for i in range(len(five_recommended)):
