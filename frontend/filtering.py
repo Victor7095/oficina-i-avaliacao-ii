@@ -2,11 +2,12 @@ import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
+
 ROOT = "dataset processado"
 RATINGS_ONLY_PATH = ROOT + '/ratings-only.csv'
 MOVIES_ONLY_PATH = ROOT + '/movies-only.csv'
 
-# Import the ratings dataset
+# import the ratings dataset
 df_ratings = pd.read_csv(ROOT + '/ratings-only.csv')
 movie_ratings_pivot=df_ratings.pivot(index="userId",columns="movieTitle",values="rating").fillna(0)
 movie_ratings_pivot.head()
@@ -15,10 +16,10 @@ movie_ratings_pivot.head()
 mat_movie_features = csr_matrix(movie_ratings_pivot.values)
 mat_movie_features
 
+# training model with cosine metric
 model_knn = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
 model_knn.fit(mat_movie_features)
 
-user_id = 232
 
 def df_formatted(recommendations):
   df_movies = pd.read_csv(MOVIES_ONLY_PATH)
@@ -28,6 +29,7 @@ def df_formatted(recommendations):
   df_movie_ratings = df_movie_ratings.sort_values(by=['rating'], ascending=False)
   return df_movie_ratings.reset_index()
 
+
 def watched_movies(user_id):
     user_ratings = movie_ratings_pivot.loc[user_id]
     
@@ -35,6 +37,7 @@ def watched_movies(user_id):
     r = r.sort_values(ascending=False)
 
     return df_formatted(r)
+
 
 def recommend(user_id):
     distances, indices = model_knn.kneighbors(
@@ -50,6 +53,9 @@ def recommend(user_id):
     r = r.sort_values(ascending=False)
 
     return df_formatted(r)
+
+
+user_id = 232
 
 user_watched_movies = watched_movies(user_id)
 recommendations = recommend(user_id)
