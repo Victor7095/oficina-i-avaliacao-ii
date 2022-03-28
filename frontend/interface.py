@@ -43,7 +43,7 @@ def form_movie(movies, no_rating=False):
 
 def main():
     st.set_page_config(layout="centered", page_icon="🎥",
-                       page_title="Movies App")
+                       page_title="Filmetragem App")
 
     # Primeira área de interação
     st.title("🎥")
