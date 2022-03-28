@@ -1,26 +1,27 @@
+import filtering
 import streamlit as st
+import pandas as pd
+import sys
+sys.path.append("lib")
 
 
-def form_movie():
+def form_movie(movies):
 
-    col1, col_Centered, col3 = st.columns([9, 5, 6])
+    col1, col_Centered, col3 = st.columns([8, 5, 6])
 
     # Nome filme
     with col_Centered:
         # Nome filme
-        st.write(f"Filme: ")
+        st.write(f"Filme: {movies['title']}")
 
         # Avaliação
-        st.write(f"Rating: ")
+        st.write(f"Rating: {movies['rating']}")
 
         # Gênero
-        st.write(f"Gênero: ")
+        st.write(f"Gênero: {movies['genres']}")
 
         # Ano
-        st.write(f"Ano: ")
-
-        # Sinopese
-        st.write(f"Sinopese")
+        st.write(f"Ano: {movies['releaseDate']}")
 
 
 def main():
@@ -42,47 +43,48 @@ def main():
     """
     st.markdown(html_temp, unsafe_allow_html=True)
 
-    userId = st.text_input(
-        "Informe o ID do usuário que você deseja prevê as recomendações：")
+    user_id = st.number_input(
+        "Informe o ID do usuário que você deseja vê os filmes assistidos e prevê as recomendações：", value=56)
 
     col1, col2, col3 = st.columns([2, 1, 2])
 
-    predict = col2.button("🔮Previsão🔮")
+    if col2.button("🔮Previsão🔮"):
+        df_recommended = filtering.recommend(user_id)
+        df_watched_movies = filtering.watched_movies(user_id)
 
-    st.markdown("")
-
-    c01, c02 = st.columns(2)
-
-    if predict:
         # Segunda área de interação
         html_assistidos = """
                 <div style=padding: 15px;">
-                <h3 style="color:white;text-align:center;">✅ Assistidos</h3>
+                <h3 style="color:white;text-align:center;">✅ Assistidos ✅</h3>
+                <h5 style="color:white;text-align:center;">5 mais bem avaliados</h5>
                 </div>
             """
         st.markdown(html_assistidos, unsafe_allow_html=True)
 
-        # Percorre a lista de filmes assistidos pelo o usuário """
-        for i in range(0, 3):
-            # Passar lista de filmes assistidos pelo usuário
-            # para captura dos dados referentes ao filme (nome, ano, gênero, etc.)
+        user_watched_movies = df_watched_movies[:2]
+
+        # Percorre a lista de filmes assistidos pelo o usuário
+        for i in range(len(user_watched_movies)):
+            movies = user_watched_movies.loc[i]
             st.markdown('---')
-            form_movie()
+            form_movie(movies)
 
         # Terceira área de interação
         html_recomendados = """
                 <div style=padding:10px; margin-top:30px;">
-                <h3 style="color:white;text-align:center;">👍 Recomendados</h3>
+                <h3 style="color:white;text-align:center;">👍 Recomendados 👍</h3>
+                <h5 style="color:white;text-align:center;">5 mais bem recomendados</h5>
                 </div>
             """
         st.markdown(html_recomendados, unsafe_allow_html=True)
 
+        five_recommended = df_recommended[:2]
+
         # Percorre a lista de filmes recomendados ao usuário
-        for i in range(0, 3):
-            # Passar lista de filmes recomendados ao usuário
-            # para captura dos dados referentes ao filme (nome, ano, gênero, etc.)
+        for i in range(len(five_recommended)):
+            movies = five_recommended.loc[i]
             st.markdown('---')
-            form_movie()
+            form_movie(movies)
 
 
 if __name__ == '__main__':
