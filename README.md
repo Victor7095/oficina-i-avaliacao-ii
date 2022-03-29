@@ -1,6 +1,6 @@
 ## Oficina de Desensevolvimento de Sistemas I
 
-## Avaliação 2
+## Parte 2 da Avaliação Parcial 1
 
 #### Objetivo:
 Desenvolver um sistema de recomendação de filmes com base em filtragem colaborativa e usando avaliações de usuários presentes em um conjunto de dados público (The Movies Dataset). Em Python, foram usada as seguintes bibliotecas: numpy, pandas, matplotlib e seaborn para processar e analisar os dados; scikit-learn e scipy para implementar as funções de similaridade e recomendação; e streamlit para criar a interface.
